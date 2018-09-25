@@ -1,0 +1,23 @@
+<p></p>
+<p></p>
+<p></p>
+<mat-card>
+  <h2 class="header">Stocks Portfolio</h2>
+
+  <table>
+    <thead>
+      <tr>
+          <th>Stock Name</th>
+          <th>Average Price</th>
+          <th>Amount</th>
+          <th>Gain/Loss</th>
+      </tr>
+    </thead>
+    <tr *ngFor="let s of aggregateStocks">
+        <td class="stockName">{{s.stockName}}</td>
+        <td class="stockPrice">{{calcAvgPrice(s)}}</td>
+        <td class="stockAmount">{{getAmount(s)}}</td>
+        <td><app-gain-loss-account [stock]="s"></app-gain-loss-account></td>
+    </tr>
+  </table>
+</mat-card>

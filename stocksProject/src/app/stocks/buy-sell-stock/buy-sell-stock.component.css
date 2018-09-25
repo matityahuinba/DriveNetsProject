@@ -1,0 +1,22 @@
+.header{
+    font-family: Arial, Helvetica, sans-serif;
+    color:grey;
+    text-align: center;
+}
+
+form{
+    text-align: center;
+}
+
+.price{
+    text-align: center;
+    border: none;
+}
+
+input{
+    font-size: 13px;
+}
+
+.amount{
+    text-align: center;
+}

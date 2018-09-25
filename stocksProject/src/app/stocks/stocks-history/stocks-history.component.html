@@ -1,0 +1,26 @@
+<p></p>
+<p></p>
+<p></p>
+<mat-card>
+  <h2 class="header">Stocks History</h2>
+  <table>
+    <thead>
+      <tr>
+          <th>Stock Name</th>
+          <th>Action</th>
+          <th>Amount</th>
+          <th>Price</th>
+          <th>Deal Date</th>
+          <th>Deal Time</th>
+      </tr>
+    </thead>
+    <tr *ngFor="let d of deals | async">
+        <td class="stockName">{{d.stockName}}</td>
+        <td class="action">{{d.action}}</td>
+        <td class="stockPrice">{{d.amount}}</td>
+        <td class="stockAmount">{{d.stockPrice}}</td>
+        <td class="dealDate">{{d.createdAt | date}}</td>
+        <td class="dealDate">{{d.createdAt | date:'shortTime'}}</td>
+    </tr>
+  </table>
+</mat-card>

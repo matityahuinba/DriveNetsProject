@@ -1,0 +1,22 @@
+<p></p>
+<p></p>
+<mat-card>
+  <h2 class="header">{{title}} {{selectedName}} stocks</h2>
+  <form *ngIf="form" [formGroup]="form" (ngSubmit)="doSave()">
+    <p>
+      <input class="name" type="text" placeholder="Name" formControlName="name"/>
+    </p>
+    <p>
+      <input class="price" type="text" placeholder="Price" formControlName="price" [value]="selectedStock ? selectedStock.stockPrice : 'Working on it...'"/>
+    </p>
+    <p>
+      <mat-form-field>
+          <input class="amount" matInput type="text" placeholder="insert amount" [formControl]="amount" required>
+        <mat-error *ngIf="amount.invalid">{{getErrorMessage()}}</mat-error>
+        </mat-form-field>
+    </p>
+    <p>
+      <input type="submit" class="send" value="save" [disabled]="amount.invalid"/>
+    </p>
+  </form>
+</mat-card>

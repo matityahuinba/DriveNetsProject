@@ -1,0 +1,11 @@
+
+  .stocks {
+    min-height: 100%;
+    width: 100%;
+  }
+
+  .title{
+    color: gray;
+    text-align: center;
+    font-family: Arial, Helvetica, sans-serif;
+  }

@@ -1,0 +1,29 @@
+<p></p>
+<p></p>
+<p></p>
+<mat-card>
+<h2 class="header">Stocks</h2>
+
+<table>
+  <thead>
+    <tr>
+        <th>Stock Name</th>
+        <th>Current Price</th>
+        <th>Opened Price</th>
+        <th>CHG</th>
+        <th>%CHG</th>
+        <th></th>
+        <th></th>
+      </tr>
+  </thead>
+  <tr *ngFor="let s of stocks | async">
+      <td class="stockName">{{s.stockName}}</td>
+      <td class="currentPrice">{{getPrice(s)}}</td>
+      <td class="openedPrice">{{s.openedPrice}}</td>
+      <td [ngClass]="{'positiveChg' : calcChg(s)>=0 , 'negativeChg': calcChg(s)<0}">{{calcChg(s)}}</td>
+      <td [ngClass]="{'positiveChg' : calcPercent(s)>=0 , 'negativeChg': calcPercent(s)<0}">{{calcPercent(s)}}%</td>
+      <td><button type="button" (click)="buyStock(s)">Buy stock</button></td>
+      <td><button type="button" (click)="sellStock(s)" [disabled]="!checkAmount(s)">Sell stock</button></td>
+  </tr>
+</table>
+</mat-card>

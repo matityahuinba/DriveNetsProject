@@ -1,0 +1,30 @@
+<p></p>
+<p></p>
+<p></p>
+<mat-card>
+  <h2 class="header">{{title}} stocks</h2>
+  <form *ngIf="form" [formGroup]="form" (ngSubmit)="doSave()">
+    <div>
+        <mat-form-field>
+            <mat-select [(value)]="selected" (selectionChange)="findCurrentPrice($event.value)">
+              <mat-option *ngFor="let s of stocksForSelect" value={{s}}>{{s}}</mat-option>
+            </mat-select>
+          </mat-form-field>
+          
+          <p>Selected stock: {{selectedName}}</p>
+    </div>
+    
+    <p>
+      <input class="price" type="text" placeholder="" formControlName="price" [value]="selectedStock ? selectedStock.stockPrice : ''"/>
+    </p>
+    <p>
+       <mat-form-field>
+          <input matInput class="amount" type="text" placeholder="insert amount" [formControl]="amount" required>
+        <mat-error *ngIf="amount.invalid">{{getErrorMessage()}}</mat-error>
+        </mat-form-field>
+    </p>
+    <p>
+      <input type="submit" class="send" value="save" [disabled]="amount.invalid"/>
+    </p>
+  </form>
+</mat-card>

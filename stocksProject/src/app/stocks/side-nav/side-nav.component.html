@@ -1,0 +1,28 @@
+<div>
+    <button mat-icon-button [matMenuTriggerFor]="menu">
+        <mat-icon>more_vert</mat-icon>
+    </button>
+    <mat-menu #menu="matMenu">
+        <button mat-menu-item (click)="clickViewStocks()">
+          <mat-icon>list</mat-icon>
+          <span>View stocks</span>
+        </button>
+        <button mat-menu-item (click)="clickPortfolio()">
+          <mat-icon>shopping_cart</mat-icon>
+          <span>Portfolio</span>
+        </button>
+        <button mat-menu-item (click)="clickHistory()">
+          <mat-icon>history</mat-icon>
+          <span>History</span>
+        </button>
+        <button mat-menu-item (click)="clickBuy()">
+          <mat-icon>add_shopping_cart</mat-icon>
+          <span>Buy stocks</span>
+        </button>
+        <button mat-menu-item (click)="clickSell()">
+          <mat-icon>remove_shopping_cart</mat-icon>
+          <span>Sell stocks</span>
+        </button>
+    </mat-menu>
+  </div>
+  

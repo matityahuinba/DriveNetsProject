@@ -1,0 +1,10 @@
+<table>
+  <td *ngFor="let stock of stocks | async">
+    <div>
+      <div class="stock">{{stock.stockName}}</div>
+      <div class="stock"> {{getPrice(stock)}}</div>
+      <div class="stock"><img [src]="(stock.stockPrice-stock.openedPrice > 0) ? 'https://upload.wikimedia.org/wikipedia/commons/5/50/Green_Arrow_Up.svg':'https://upload.wikimedia.org/wikipedia/commons/0/04/Red_Arrow_Down.svg'">
+      </div>
+    </div>
+  </td>
+</table>
