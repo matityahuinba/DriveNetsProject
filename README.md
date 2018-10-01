@@ -1,3 +1,6 @@
+
+This is a branch dedicated to adding an autocomplete mechanism to the select box of stock names. 
+
 # Installation Guide
 Each of the folders below contains a part of the project that required to be complied and run in order that the entire project to work.
 
