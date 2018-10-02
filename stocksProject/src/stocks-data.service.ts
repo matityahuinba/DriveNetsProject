@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { stock } from './app/model/stock';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { BehaviorSubject, Observable, Subscription } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { Trade } from './app/model/trade';
 import { environment } from './environments/environment';
@@ -17,10 +17,14 @@ export class StocksDataService {
 
   stocks$: BehaviorSubject<Array<stock>> = new BehaviorSubject<Array<stock>>([]);
 
+  filteredStocks$ : BehaviorSubject<Array<stock>> = new BehaviorSubject<Array<stock>>([]);
+
   deals: Array<Trade> = [];
   deals$: BehaviorSubject<Array<Trade>> = new BehaviorSubject<Array<Trade>>([]);
 
   portfolio$: BehaviorSubject<Array<stockPortfolio>> = new BehaviorSubject<Array<stockPortfolio>>([]);
+
+  prefixRequest : Subscription = null;
 
   constructor(private http: HttpClient, private socket: Socket, private router: Router) {
 
@@ -94,6 +98,18 @@ export class StocksDataService {
 
   sellStock(d: Trade) {       
     return this.buyOrSell(d);
+  }
+
+  getStocksByPrefix(prefix: string) {
+    if (this.prefixRequest){
+      this.prefixRequest.unsubscribe();
+      this.prefixRequest = null;
+    }
+    this.prefixRequest = this.http.get<Array<stock>>(environment.stocksService + '/stocks/prefix/'+prefix).subscribe(x=>{
+      this.filteredStocks$.next(x);
+      this.prefixRequest = null;
+    })
+    return this.prefixRequest;
   }
 
   updateStock(s: stock): Observable<any> {

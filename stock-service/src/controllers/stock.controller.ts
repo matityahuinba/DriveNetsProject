@@ -10,6 +10,11 @@ export class StockController {
     return StockModel.findAll().map(s => s.toJSON());
   }
 
+  @Get("/prefix/:pre")
+  getNamesByPrefix(@Param("pre") pre: string){
+    return StockModel.findAll({where: {stockName: { $ilike: pre + '%' }}}).map(s => s.toJSON());
+  }
+
   @Get("/:id")
   getStock(@Param("id") id: string) {
     return StockModel.findById(id).then(s => s ? s.toJSON() : s);

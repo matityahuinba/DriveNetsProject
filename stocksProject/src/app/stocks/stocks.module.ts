@@ -13,7 +13,7 @@ import { ViewStocksComponent } from './view-stocks/view-stocks.component';
 import { BuySellCurrentStockComponent } from './buy-sell-current-stock/buy-sell-current-stock.component';
 import { SideNavComponent } from './side-nav/side-nav.component';
 import { MatMenuModule } from '@angular/material/menu';
-import { MatIconModule } from '@angular/material';
+import { MatIconModule, MatAutocompleteModule } from '@angular/material';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material';
 import { BrowserModule } from '@angular/platform-browser';
@@ -23,6 +23,7 @@ import { MatCardModule, MatToolbarModule, MatButtonModule } from '@angular/mater
 import { DialogComponent } from './dialog/dialog.component';
 import { MatDialogModule } from '@angular/material';
 import { ErrorPageComponent } from './error-page/error-page.component';
+import { AutocompleteComponent } from './autocomplete/autocomplete.component';
 
 
 @NgModule({
@@ -47,10 +48,11 @@ import { ErrorPageComponent } from './error-page/error-page.component';
     MatButtonModule,
     MatFormFieldModule,
     MatInputModule,
-    MatDialogModule
+    MatDialogModule,
+    MatAutocompleteModule
   ],
-  exports: [StocksListComponent, StocksHistoryComponent, PortfolioComponent, BuySellStockComponent,GainLossAccountComponent, ViewStocksComponent, BuySellCurrentStockComponent,SideNavComponent, MainComponent, DialogComponent, ErrorPageComponent],
-  declarations: [StocksListComponent, StocksHistoryComponent, PortfolioComponent, BuySellStockComponent, GainLossAccountComponent, ViewStocksComponent, BuySellCurrentStockComponent, SideNavComponent, MainComponent, DialogComponent, ErrorPageComponent],
+  exports: [StocksListComponent, StocksHistoryComponent, PortfolioComponent, BuySellStockComponent,GainLossAccountComponent, ViewStocksComponent, BuySellCurrentStockComponent,SideNavComponent, MainComponent, DialogComponent, ErrorPageComponent, AutocompleteComponent],
+  declarations: [StocksListComponent, StocksHistoryComponent, PortfolioComponent, BuySellStockComponent, GainLossAccountComponent, ViewStocksComponent, BuySellCurrentStockComponent, SideNavComponent, MainComponent, DialogComponent, ErrorPageComponent, AutocompleteComponent],
   entryComponents: [DialogComponent]
 })
 export class StocksModule { }
