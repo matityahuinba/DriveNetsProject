@@ -17,7 +17,7 @@ export class StocksDataService {
 
   stocks$: BehaviorSubject<Array<stock>> = new BehaviorSubject<Array<stock>>([]);
 
-  filteredStocks$ : BehaviorSubject<Array<stock>> = new BehaviorSubject<Array<stock>>([]);
+  filteredStocks$ : BehaviorSubject<Array<any>> = new BehaviorSubject<Array<any>>([]);
 
   deals: Array<Trade> = [];
   deals$: BehaviorSubject<Array<Trade>> = new BehaviorSubject<Array<Trade>>([]);
@@ -100,15 +100,33 @@ export class StocksDataService {
     return this.buyOrSell(d);
   }
 
-  getStocksByPrefix(prefix: string) {
+  async getStocksByPrefix(prefix: string, flag:string) {
     if (this.prefixRequest){
       this.prefixRequest.unsubscribe();
       this.prefixRequest = null;
     }
-    this.prefixRequest = this.http.get<Array<stock>>(environment.stocksService + '/stocks/prefix/'+prefix).subscribe(x=>{
-      this.filteredStocks$.next(x);
-      this.prefixRequest = null;
-    })
+    if (flag === 'Buy'){
+      this.prefixRequest = await this.http.get<Array<stock>>(environment.stocksService + '/stocks/prefix/'+prefix).subscribe(x=>{
+        if(x){
+          this.filteredStocks$.next(x);
+          this.prefixRequest = null;
+        }
+       else{
+        this.filteredStocks$.next([]);
+        this.prefixRequest = null;
+       }
+      })
+    }else{
+      this.prefixRequest = await this.http.get<Array<stockPortfolio>>(environment.tradesService + '/trades/prefix/'+prefix).subscribe(x=>{
+        if (x){
+          this.filteredStocks$.next([x]);
+          this.prefixRequest = null;
+        }else{
+          this.filteredStocks$.next([]);
+          this.prefixRequest = null;
+        }
+      })
+    }
     return this.prefixRequest;
   }
 

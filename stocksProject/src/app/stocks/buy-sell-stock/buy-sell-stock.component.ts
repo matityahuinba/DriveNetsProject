@@ -42,30 +42,17 @@ export class BuySellStockComponent implements OnInit {
   max: number;
 
   constructor(private router: Router, private stockService: StocksDataService, private activatedRoute: ActivatedRoute, private dialog: MatDialog) {
+    activatedRoute.params.subscribe(params => {
+      const id = params['id'];
+      this.title = id;
+    });
+    
     this.stocksForSelect = new Array<string>();
     this.form = this.fb.group({
       amount: ['', Validators.required],
       price: []
     });
 
-    activatedRoute.params.subscribe(params => {
-      const id = params['id'];
-      this.title = id;
-    });
-
-    try{
-      this.defineStocksToSelect();
-    }catch(e){
-        this.router.navigate(['/', 'error']);
-    }
-    if (this.stocksForSelect.length === 0){
-      if (this.title === 'Buy'){
-        this.router.navigate(['/', 'error']);
-      }
-      else{
-        this.router.navigate(['/', 'error', 'sell']);
-      }
-    }
   }
 
   private maxValidator(max: number): ValidatorFn {
@@ -106,31 +93,6 @@ export class BuySellStockComponent implements OnInit {
       this.max = await this.calcMax(stockId);
       this.amount.setValidators(Validators.compose([this.positiveAmount(this.min),this.maxValidator(this.max), Validators.required]));
     }
-  }
-
-  private defineStocksToSelect() {
-    if (this.title === 'Buy') {
-       this.stockService.stocks$.pipe(map(arr => arr.map(o => o.stockName))).subscribe(x => { 
-        for (let i = 0; i < x.length; i++) {
-          this.stocksForSelect.push(x[i]);
-        }
-      });
-    } else {  
-      this.calcSellStocks();
-    }
-  }
-
-  private calcSellStocks(){
-    let aggregateStocks: Array<stockPortfolio>=[];
-    this.stockService.portfolio$.subscribe((stocks : Array<any>) => { 
-      for (let key of Object.keys(stocks)){
-        if (stocks[key].amount>0){
-        aggregateStocks.push(stocks[key]);
-       }
-      }
-      aggregateStocks.map(y=> this.stocksForSelect.push(y.stockName));
-    }, error => {throw new Error()})
-
   }
 
   openDialog(body: string){
@@ -192,16 +154,6 @@ export class BuySellStockComponent implements OnInit {
     this.doActionNeeded('buy');
   }
 
-  findCurrentPrice(stockName: string) {
-    this.selectedName = stockName;
-    this.stockService.stocks$.subscribe((stocks : Array<any>) => {
-      this.selectedStock = stocks.find(s => s.stockName === this.selectedName);
-    });
-
-    this.max = 0;
-    this.findMaxAmount(this.selectedStock.id);
-  }
-
   SellStock() {
     this.doActionNeeded('sell');
   }
@@ -210,6 +162,16 @@ export class BuySellStockComponent implements OnInit {
     return this.amount.hasError('required') ? 'You must enter an amount.' :
     this.amount.hasError('positiveAmount') ? 'Not valid. At least one stock needed.' :
     this.amount.hasError('maxValidator') ? 'Notice - the max amount is '+this.max : '';
+  }
+
+  selectName(name:string){
+    this.selectedName = name;
+    this.stockService.stocks$.subscribe((stocks : Array<any>) => {
+      this.selectedStock = stocks.find(s => s.stockName === this.selectedName);
+    });
+
+    this.max = 0;
+    this.findMaxAmount(this.selectedStock.id);
   }
 
   ngOnInit() {

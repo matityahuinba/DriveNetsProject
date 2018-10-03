@@ -1,7 +1,7 @@
 <form class="autocompleteForm">
   <mat-form-field class="autocompleteField">
-    <input (input)="onSearchChange($event.target.value)" matInput placeholder="Stock Name" aria-label="Name" [matAutocomplete]="auto" [formControl]="namesCtrl">
-    <mat-autocomplete #auto="matAutocomplete" #autoComplete>
+    <input (input)="onSearchChange($event.target.value)" matInput placeholder="Stock Name" aria-label="Name" [matAutocomplete]="auto">
+    <mat-autocomplete #auto="matAutocomplete" #autoComplete (optionSelected)='getName($event.option.value)'>
       <mat-option *ngFor="let stock of filteredNames | async" [value]="stock.stockName">
         <span>{{stock.stockName}}</span> 
       </mat-option>

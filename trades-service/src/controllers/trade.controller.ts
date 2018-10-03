@@ -112,6 +112,12 @@ export class TradeController {
     return TradeModel.create(trade).then(t => t ? t.toJSON() : t);
   }
 
+  @Get("/prefix/:pre")
+  getNamesByPrefix(@Param("pre") pre: string){
+    return TradeModel.findAll({where: {stockName: { $ilike: pre + '%' }}}).map(s => s.toJSON())
+      .then(tradesOfStock => this.calculateStockDetails(tradesOfStock));
+  }
+
   @Get("/:id")
   getTrade(@Param("id") id: string) {
     return TradeModel.findById(id).then(s => s ? s.toJSON() : s);
